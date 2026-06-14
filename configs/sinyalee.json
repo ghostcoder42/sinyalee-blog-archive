@@ -1,0 +1,36 @@
+{
+  "name": "sinyalee",
+  "baseUrl": "https://sinyalee.com/blog",
+  "list": {
+    "strategy": "simple-yearly-archive",
+    "url": "https://sinyalee.com/blog/?page_id=183",
+    "selectors": {
+      "item": ".sya_postcontent",
+      "link": "a.sya_postlink",
+      "date": ".sya_date",
+      "category": ".sya_categories"
+    }
+  },
+  "post": {
+    "selectors": {
+      "title": "h1.entry-title",
+      "date": "time.entry-date",
+      "dateAttr": "datetime",
+      "content": "div.entry-content",
+      "category": "footer.entry-footer .cat-links a"
+    }
+  },
+  "fetch": {
+    "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36",
+    "delayMs": 1500,
+    "maxRetries": 3,
+    "timeoutMs": 15000
+  },
+  "output": {
+    "dir": "blog",
+    "naming": "date-slug",
+    "frontMatter": true,
+    "downloadImages": true,
+    "imageDir": "assets"
+  }
+}

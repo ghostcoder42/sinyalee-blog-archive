@@ -1,0 +1,28 @@
+{
+  "name": "sinyalee-blog-archive",
+  "version": "1.0.0",
+  "description": "sinyalee.com blog archive — fetch posts and convert to Markdown",
+  "module": "src/index.ts",
+  "type": "module",
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "lint:check": "biome check src/",
+    "lint:fix": "biome check --write --unsafe src/",
+    "build": "bun build src/index.ts --outdir dist --target bun",
+    "test": "bun test",
+    "precommit": "bun run typecheck && bun run lint:fix && bun run build"
+  },
+  "dependencies": {
+    "cheerio": "^1.0.0",
+    "turndown": "^7.2.0"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.0.0",
+    "@types/node": "^25.9.3",
+    "@types/turndown": "^5.0.5",
+    "typescript": "^5.7.0"
+  },
+  "peerDependencies": {
+    "typescript": "^5.7.0"
+  }
+}
