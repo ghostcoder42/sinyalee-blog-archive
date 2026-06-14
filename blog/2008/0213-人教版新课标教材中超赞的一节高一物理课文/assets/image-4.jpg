@@ -1,0 +1,42 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>系统升级维护公告</title>
+    <style>
+        body,
+        html {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        
+        div {
+            text-align: center;
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+        
+        div img {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            margin-left: -330px;
+            margin-top: -230px;
+        }
+    </style>
+
+
+<meta http-equiv="refresh" content="5;url=https://www.pep.com.cn"> 
+</head>
+
+<body>
+    <div>
+        <img src="./images/pic_wh_pep2022.jpg" alt="" />
+    </div>
+</body>
+
+</html>
