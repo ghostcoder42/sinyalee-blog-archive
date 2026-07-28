@@ -24,4 +24,50 @@ jobs:
           git config user.name "blog-archive-bot"
           git config user.email "bot@users.noreply.github.com"
           git add blog/
-          git diff --staged --quiet || (git commit -m "chore: sync $(date -u +%Y-%m-%d)" && git push)
+
+          if git diff --staged --quiet; then
+            echo "没有变更，跳过"
+            exit 0
+          fi
+
+          # 仅统计本次新增的文章 index.md（-z 避免对中文/空格路径加引号）
+          titles=()
+          while IFS= read -r f; do
+            [[ "$f" == blog/*/index.md ]] || continue
+            t=$(grep -m1 -E '^title:' "$f" | sed -E 's/^title:[[:space:]]*"(.*)"[[:space:]]*$/\1/' || true)
+            titles+=("$t")
+          done < <(git diff --staged --name-only -z --diff-filter=A | tr '\0' '\n')
+
+          n=${#titles[@]}
+          if [ "$n" -eq 0 ]; then
+            echo "无新文章，跳过提交"
+            exit 0
+          fi
+
+          # 构造 subject：前缀 + 逐个追加《标题》，保持每个单元完整并截断到 100 字符
+          if [ "$n" -eq 1 ]; then
+            prefix="chore: ✍️"
+          else
+            prefix="chore: ✍️*${n} "
+          fi
+
+          subject="$prefix"
+          all_fit=true
+          for t in "${titles[@]}"; do
+            unit="《${t}》"
+            if [ $(( ${#subject} + ${#unit} )) -le 100 ]; then
+              subject="${subject}${unit}"
+            else
+              all_fit=false
+              break
+            fi
+          done
+
+          if [ "$all_fit" = true ]; then
+            git commit -m "$subject"
+          else
+            subject="${subject}…"
+            body=$(printf -- '- %s\n' "${titles[@]}")
+            git commit -m "$subject" -m "$body"
+          fi
+          git push
